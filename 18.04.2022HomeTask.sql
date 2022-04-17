@@ -79,6 +79,13 @@ where ListenerCount> @ListenerCount And Charindex(@Search, M.Name) > 0
 exec GetMusicNames 23123,'s'
 
 -- query 4
+create trigger InsteadOfDelete
+on Musics
+Instead of delete
+as
+begin
+	Update Musics set IsDeleted = 1 where Id = (Select Id from deleted Musics)
+end
 
 delete  from Musics where Id = 4
 Select * from Musics 
